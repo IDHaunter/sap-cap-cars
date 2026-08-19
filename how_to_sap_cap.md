@@ -62,17 +62,25 @@
 
 13. Install any DB viewer like DBeaver and check DB entries of db.sqlite
 
-## ODATA + custom exits
+14. Commit, push and merge to main
 
-14. Create ODATA layer: 
+- git add -A
+- git commit -m "feat: db schema complete"
+- git checkout main
+- git merge feat/db-schema-sqlite
+- git push
+
+## ODATA + custom logic
+
+15. Create ODATA layer:
 
 - srv/cars-service.cds
 
-15. Create a nodeJS layer with addintional logic:
+16. Create a nodeJS layer with addintional logic:
 
 - srv/cars-service.js
 
-16. Check ODATA layer:
+17. Check ODATA layer:
 
 - cds watch
 - http://localhost:4004/odata/v4/cars/$metadata
@@ -80,7 +88,7 @@
 - http://localhost:4004/odata/v4/catalog/Customers
 - ...
 
-## ADDITIONAL
+## ADDITIONAL FOR BTP DEPLOYMENT
 
 ### Install HANA CLI
 
