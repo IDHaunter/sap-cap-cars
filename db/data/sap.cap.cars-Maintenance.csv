@@ -1,0 +1,6 @@
+ID,startDate,endDate,description,cost,car_licensePlate
+c4c8b2c1-2222-4b2b-9b2b-000000000001,2026-06-01,2026-06-02,Oil change and filter replacement,80.00,AB1234CD
+c4c8b2c1-2222-4b2b-9b2b-000000000002,2026-06-05,2026-06-06,Brake pad replacement,150.00,EF5678GH
+c4c8b2c1-2222-4b2b-9b2b-000000000003,2026-06-10,2026-06-11,Tire rotation and alignment,60.00,IJ9012KL
+c4c8b2c1-2222-4b2b-9b2b-000000000004,2026-06-15,2026-06-16,Battery replacement,120.00,MN3456OP
+c4c8b2c1-2222-4b2b-9b2b-000000000005,2026-06-20,2026-06-22,Transmission service,300.00,QR7890ST

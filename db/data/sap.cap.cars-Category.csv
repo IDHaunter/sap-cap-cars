@@ -1,0 +1,11 @@
+code,name
+SEDAN,Sedan
+CROSSOVER,Crossover
+CABRIOLET,Cabriolet
+MPV,MPV
+VAN,Van
+SUV,SUV
+HATCHBACK,Hatchback
+ROADSTER,Roadster
+TRUCK,Truck
+UNIVERSAL,Universal

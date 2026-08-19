@@ -60,18 +60,19 @@
 
 - cds watch
 
+13. Install any DB viewer like DBeaver and check DB entries of db.sqlite
+
 ## ODATA + custom exits
 
-13. Create ODATA layer: 
+14. Create ODATA layer: 
 
 - srv/cars-service.cds
-- WARNING: this file (.cds) uses not js syntax
 
-14. Create a nodeJS layer with addintional logic:
+15. Create a nodeJS layer with addintional logic:
 
 - srv/cars-service.js
 
-15. Check ODATA layer:
+16. Check ODATA layer:
 
 - cds watch
 - http://localhost:4004/odata/v4/cars/$metadata

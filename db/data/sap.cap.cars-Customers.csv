@@ -1,0 +1,4 @@
+ID,driverLicense,email,firstName,lastName,phone,address
+CUST000001,DL1000001,john.doe@example.com,John,Doe,+1-555-0101,"123 Main St, Springfield"
+CUST000002,DL1000002,jane.smith@example.com,Jane,Smith,+1-555-0102,"456 Oak Ave, Springfield"
+CUST000003,DL1000003,mike.brown@example.com,Mike,Brown,+1-555-0103,"789 Pine Rd, Springfield"

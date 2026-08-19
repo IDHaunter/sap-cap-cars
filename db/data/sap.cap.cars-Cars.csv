@@ -1,0 +1,6 @@
+licensePlate,brand,model,year,dailyPrice,category_code
+AB1234CD,Toyota,Corolla,2021,45.00,SEDAN
+EF5678GH,Honda,CR-V,2022,65.00,CROSSOVER
+IJ9012KL,Ford,Explorer,2020,75.00,SUV
+MN3456OP,Volkswagen,Golf,2023,40.00,HATCHBACK
+QR7890ST,Ford,F-150,2021,90.00,TRUCK
