@@ -1,0 +1,16 @@
+{
+  "hooks": {
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "OUTPUT=$(npm test 2>&1); STATUS=$?; if [ $STATUS -ne 0 ]; then jq -n --arg out \"$OUTPUT\" '{decision:\"block\", reason: (\"Mandatory npm test failed - fix the failing tests before finishing:\\n\" + $out)}'; else jq -n '{systemMessage: \"npm test passed.\"}'; fi",
+            "timeout": 120,
+            "statusMessage": "Running npm test..."
+          }
+        ]
+      }
+    ]
+  }
+}

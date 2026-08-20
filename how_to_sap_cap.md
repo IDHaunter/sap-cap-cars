@@ -155,7 +155,7 @@
 
 - nmp test
 
-
+22. Create a Hook for claude to automaticaly run test on every change
 
 ## ADDITIONAL - BTP DEPLOYMENT
 
