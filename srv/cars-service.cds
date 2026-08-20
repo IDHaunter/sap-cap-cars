@@ -2,7 +2,15 @@ using { sap.cap.cars as db } from '../db/schema';
 
 service CarsService {
 
-  entity Cars as projection on db.Cars actions {
+  entity Cars as projection on db.Cars {
+    *,
+    case
+      when exists maintenances[startDate <= $now and endDate >= $now] then 'UM'
+      when exists rentals[startDate <= $now and endDate >= $now]      then 'RE'
+      else 'AV'
+    end as status_code : String(2),
+    status : Association to AvailabilityStatus on status.code = status_code
+  } actions {
     action rent(
       startDate   : Date,
       endDate     : Date,
@@ -17,8 +25,9 @@ service CarsService {
     ) returns Maintenance;
   };
 
-  entity Customers    as projection on db.Customers;
-  entity Rentals      as projection on db.Rentals;
-  entity Maintenance  as projection on db.Maintenance;
+  entity Customers           as projection on db.Customers;
+  entity Rentals             as projection on db.Rentals;
+  entity Maintenance         as projection on db.Maintenance;
+  entity AvailabilityStatus  as projection on db.AvailabilityStatus;
 
 }

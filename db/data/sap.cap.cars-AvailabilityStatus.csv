@@ -1,4 +1,4 @@
 code,name,criticality
-AVAILABLE,Available,3
-RENTED,Rented,2
-MAINTENANCE,In Maintenance,1
+AV,Available,3
+RE,Rented,2
+UM,Under Maintenance,1
