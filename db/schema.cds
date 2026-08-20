@@ -7,12 +7,17 @@ aspect DatePeriod {
   endDate   : Date @mandatory;
 }
 
+entity Category {
+  key code : String(10);
+  name     : String(50);
+}
+
 entity Cars {
   key licensePlate : String(20);
   brand            : String(50)  @mandatory;
   model            : String(50)  @mandatory;
   year             : Integer     @mandatory;
-  dailyPrice       : Decimal(9,2) @mandatory;
+  dailyPrice       : Decimal(9,2) @mandatory @assert.range: [(0), _];
   category         : Association to Category @mandatory;
   rentals          : Association to many Rentals on rentals.car = $self;
   maintenances     : Association to many Maintenance on maintenances.car = $self;
@@ -49,9 +54,4 @@ entity AvailabilityStatus {
   key code    : String(10);
   name        : String(50);
   criticality : Integer;
-}
-
-entity Category {
-  key code : String(10);
-  name     : String(50);
 }

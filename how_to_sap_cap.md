@@ -114,7 +114,48 @@
 
 - js_sap-cap-cars.postman_collection.json
 
-20. Create a handler for rental price calculation this.after('READ', 'Rentals' ...)
+20. Create a handler for rental price calculation this.after('READ', 'Rentals' ...) and others
+
+21. Create tests for the service in tests/cars.test.js:
+
+- npm add -D @cap-js/cds-test
+- npm install
+- in pakage.json add a script like this:
+
+```
+  "scripts": {
+    "test": "cds test --profile test"
+  }
+```
+
+- in pakage.json create a test in memory configuration like this:
+
+```
+  "cds": {
+    "requires": {
+      "db": {
+        "kind": "sqlite",
+        "credentials": {
+          "url": "db.sqlite"
+        }
+      }
+    },
+    "[test]": {
+      "requires": {
+        "db": {
+          "kind": "sqlite",
+          "credentials": {
+            "url": ":memory:"
+          }
+        }
+      }
+    }
+  }
+```
+
+- nmp test
+
+
 
 ## ADDITIONAL - BTP DEPLOYMENT
 

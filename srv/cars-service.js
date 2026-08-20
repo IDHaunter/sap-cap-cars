@@ -4,6 +4,15 @@ module.exports = cds.service.impl(async function () {
 
     const { Cars, Rentals, Maintenance } = this.entities
 
+    // ------------------- Cars ---------------------
+
+    this.before(['CREATE', 'UPDATE'], 'Cars', (req) => {
+        validateCarYear(req)
+        validateDailyPrice(req)
+    })
+
+    // ------------------- Rentals ------------------
+
     /**
      * Rent a car.
      */
@@ -29,37 +38,18 @@ module.exports = cds.service.impl(async function () {
             .where({ ID: rental.ID }))
     })
 
-
     /**
-     * Put a car into maintenance.
+     * Rent a car impossible using the standard handler.
      */
-    this.on('setToMaintenance', 'Cars', async (req) => {
-
-        const { startDate, endDate, description, cost } = req.data
-        const { licensePlate } = req.params[0]
-
-        validatePeriod(req, startDate, endDate)
-        await validateAvailability(req, Rentals, Maintenance, licensePlate, startDate, endDate)
-
-        const maintenance = {
-            startDate,
-            endDate,
-            description,
-            cost,
-            car_licensePlate: licensePlate
-        }
-
-        await INSERT.into(Maintenance).entries(maintenance)
-
-        return SELECT.one
-            .from(Maintenance)
-            .where({ ID: maintenance.ID })
+    this.before('CREATE', 'Rentals', (req) => {
+        req.reject(
+            400,
+            'Rentals must be created using the rent action'
+        )
     })
 
-
     /**
-     * Computes totalPrice for each read Rental as
-     * (number of days rented) × (car's dailyPrice).
+     * Computes totalPrice for each read Rental as (number of days rented) × (car's dailyPrice).
      */
     this.after('READ', 'Rentals', async (rentals) => {
         /*
@@ -119,8 +109,94 @@ module.exports = cds.service.impl(async function () {
             rental.totalPrice = calculateTotalPrice(rental.startDate, rental.endDate, dailyPrice)
         }
     })
+
+    // ------------------- Maintenance ------------------
+
+    /**
+     * Put a car into maintenance.
+     */
+    this.on('setToMaintenance', 'Cars', async (req) => {
+
+        const { startDate, endDate, description, cost } = req.data
+        const { licensePlate } = req.params[0]
+
+        validatePeriod(req, startDate, endDate)
+        await validateAvailability(req, Rentals, Maintenance, licensePlate, startDate, endDate)
+
+        const maintenance = {
+            startDate,
+            endDate,
+            description,
+            cost,
+            car_licensePlate: licensePlate
+        }
+
+        await INSERT.into(Maintenance).entries(maintenance)
+
+        return SELECT.one
+            .from(Maintenance)
+            .where({ ID: maintenance.ID })
+    })
+
+    /**
+     * Do a maintenance impossible using the standard handler.
+     */
+    this.before('CREATE', 'Maintenance', (req) => {
+        req.reject(
+            400,
+            'Maintenance records must be created using the setToMaintenance action'
+        )
+    })
+
 })
 
+//------------------- Helper Functions ------------------
+
+/*
+* Validates that the car year is not in the future and not older than 15 years.
+*/
+function validateCarYear(req) {
+
+    const { year } = req.data
+
+    // On UPDATE, year may not be provided.
+    if (year === undefined) return
+
+    const currentYear = new Date().getFullYear()
+    const oldestAllowedYear = currentYear - 15
+
+    if (year > currentYear) {
+        req.reject(
+            400,
+            `Car year cannot be in the future`
+        )
+    }
+
+    if (year < oldestAllowedYear) {
+        req.reject(
+            400,
+            `Car year must be within the last 15 years`
+        )
+    }
+}
+
+/*
+* Validates that the dailyPrice is greater than zero.
+*/
+function validateDailyPrice(req) {
+
+    const { dailyPrice } = req.data
+
+    // On UPDATE, dailyPrice may not be provided.
+    if (dailyPrice === undefined) return
+
+    if (dailyPrice <= 0) {
+        req.reject(
+            400,
+            'dailyPrice must be greater than zero'
+        )
+    }
+}
 
 /**
  * Validates a rental or maintenance period.
