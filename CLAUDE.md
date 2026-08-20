@@ -28,3 +28,10 @@
 Example: service.cds and service.js (or service.ts)
 - UI Annotations Isolation: All Fiori/UI annotations must be separated into a dedicated CDS file using the -ui suffix. Example: service-ui.cds
 - Common commands: `cds watch` (run dev server), `cds deploy --to sqlite` (rebuild local DB).
+
+## Custom Action Handler Style
+
+- Register handlers via `module.exports = cds.service.impl(async function () { ... })`, destructuring needed entities from `this.entities` once at the top.
+- Destructure the bound entity's key directly from `req.params[0]` (e.g. `const { licensePlate } = req.params[0]`), and the action's parameters from `req.data`.
+- Use `req.reject(statusCode, message)` for validation failures, not `req.error(...)` — `reject` throws immediately and halts the handler, so no manual `return` is needed after it.
+- Extract shared validation logic (e.g. date-range checks, overlap checks) into small top-level helper functions with a short JSDoc comment describing intent, and call them from each handler.
