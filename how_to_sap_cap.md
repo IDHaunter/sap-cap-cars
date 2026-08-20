@@ -62,6 +62,7 @@
 
 13. Install any DB viewer like DBeaver and check DB entries of db.sqlite
 
+<<<<<<< HEAD
 14. Commit, push and merge to main
 
 - git add -A
@@ -73,6 +74,13 @@
 ## ODATA + custom logic
 
 15. Create ODATA layer:
+=======
+14. Use https://excalidraw.com/ to see the data in a nice way
+
+## ODATA + custom exits
+
+15. Create ODATA layer: 
+>>>>>>> feat/db-schema-sqlite
 
 - srv/cars-service.cds
 
