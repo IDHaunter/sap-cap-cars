@@ -1,0 +1,255 @@
+{
+  "info": {
+    "_postman_id": "8b49546f-3691-45de-bebe-680b5846cf24",
+    "name": "js_sap-cap-cars",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "21684824",
+    "_collection_link": "https://go.postman.co/collection/21684824-8b49546f-3691-45de-bebe-680b5846cf24?source=collection_link"
+  },
+  "item": [
+    {
+      "name": "srv",
+      "item": [
+        {
+          "name": "cars",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/odata/v4/cars/",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "odata",
+                "v4",
+                "cars",
+                ""
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "cars/$metadata",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/odata/v4/cars/$metadata",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "odata",
+                "v4",
+                "cars",
+                "$metadata"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "cars/Cars",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/odata/v4/cars/Cars",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "odata",
+                "v4",
+                "cars",
+                "Cars"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "cars/Rentals",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/odata/v4/cars/Rentals",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "odata",
+                "v4",
+                "cars",
+                "Rentals"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "cars/Maintenance",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/odata/v4/cars/Maintenance",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "odata",
+                "v4",
+                "cars",
+                "Maintenance"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "cars/Customers",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/odata/v4/cars/Customers",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "odata",
+                "v4",
+                "cars",
+                "Customers"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "cars/Cars",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"licensePlate\": \"AB4444CD\",\n    \"brand\": \"Toyota\",\n    \"model\": \"Corolla\",\n    \"year\": 2023,\n    \"dailyPrice\": \"47.00\",\n    \"category_code\": \"SEDAN\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/odata/v4/cars/Cars",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "odata",
+                "v4",
+                "cars",
+                "Cars"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "cars/Cars/rent",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"startDate\": \"2026-08-20\",\n    \"endDate\": \"2026-08-29\",\n    \"customer_ID\": \"CUST000001\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/odata/v4/cars/Cars(licensePlate='AB4444CD')/rent",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "odata",
+                "v4",
+                "cars",
+                "Cars(licensePlate='AB4444CD')",
+                "rent"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "cars/Cars/setToMaintenance",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"startDate\": \"2026-08-20\",\n    \"endDate\": \"2026-08-29\",\n    \"description\": \"Change oil\",\n    \"cost\": 12.99\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/odata/v4/cars/Cars(licensePlate='AB4444CD')/setToMaintenance",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "odata",
+                "v4",
+                "cars",
+                "Cars(licensePlate='AB4444CD')",
+                "setToMaintenance"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    }
+  ],
+  "event": [
+    {
+      "listen": "prerequest",
+      "script": {
+        "type": "text/javascript",
+        "packages": {},
+        "requests": {},
+        "exec": [
+          ""
+        ]
+      }
+    },
+    {
+      "listen": "test",
+      "script": {
+        "type": "text/javascript",
+        "packages": {},
+        "requests": {},
+        "exec": [
+          ""
+        ]
+      }
+    }
+  ],
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": ""
+    }
+  ]
+}

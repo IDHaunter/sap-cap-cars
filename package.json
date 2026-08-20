@@ -1,5 +1,15 @@
 {
   "devDependencies": {
     "@cap-js/sqlite": "^3.0.2"
+  },
+  "cds": {
+    "requires": {
+      "db": {
+        "kind": "sqlite",
+        "credentials": {
+          "url": "db.sqlite"
+        }
+      }
+    }
   }
 }

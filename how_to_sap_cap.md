@@ -89,9 +89,30 @@
 - git checkout -b "feat/odata-service"
 - git push --set-upstream origin feat/odata-service
 
-17. Create a nodeJS layer with addintional logic:
+17. Create a nodeJS layer with addintional logic and add 2 custom actions for Cars: `rent` and `setToMaintenance`:
 
 - srv/cars-service.js
+
+18. Add additional configuration in package.json to have persistant database instead of in-memory database:
+
+```
+  "cds": {
+    "requires": {
+      "db": {
+        "kind": "sqlite",
+        "credentials": {
+          "url": "db.sqlite"
+        }
+      }
+    }
+  }
+```
+
+- cds deploy --to sqlite:db.sqlite
+
+19. Create a postMan collection and test new fuctionalities:
+
+- js_sap-cap-cars.postman_collection.json
 
 ## ADDITIONAL - BTP DEPLOYMENT
 
