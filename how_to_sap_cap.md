@@ -1,6 +1,6 @@
 # HOW TO SAP CAP FROM SCRATCH
 
-## INITIAL STEPS
+## Module 1 - CAP Foundations (Setup + CDS + Service Basics) ~1 day
 
 1. Install Node.js and npm 
 
@@ -33,8 +33,6 @@
 - git commit -m "Initial commit"
 - git push --set-upstream origin main
 
-## DB SCHEMA (SQLite)
-
 7. Create an independent git branch
 
 - git checkout -b "feat/db-schema-sqlite"
@@ -64,25 +62,11 @@
 
 14. Use https://excalidraw.com/ to see the data in a nice way
 
-15. Commit, push and merge to main
-
-- git add -A
-- git commit -m "feat: db schema complete"
-- git checkout main
-- git merge feat/db-schema-sqlite
-- git push
-
-## ODATA + custom logic
-
-16. Create ODATA layer:
+15. Create ODATA layer with projections for Cars, Customers, Rentals, Maintenance:
 
 - srv/cars-service.cds
 
-17. Create a nodeJS layer with addintional logic:
-
-- srv/cars-service.js
-
-18. Check ODATA layer:
+16. Check ODATA layer:
 
 - cds watch
 - http://localhost:4004/odata/v4/cars/$metadata
@@ -90,7 +74,26 @@
 - http://localhost:4004/odata/v4/catalog/Customers
 - ...
 
-## ADDITIONAL FOR BTP DEPLOYMENT
+17. Commit, push and merge to main
+
+- git add -A
+- git commit -m "feat: db schema complete"
+- git checkout main
+- git merge feat/db-schema-sqlite
+- git push
+
+## Module 2 - Service Logic + Validations + Custom Actions ~2 days
+
+16. Create an independent git branch for the service logic:
+
+- git checkout -b "feat/odata-service"
+- git push --set-upstream origin feat/odata-service
+
+17. Create a nodeJS layer with addintional logic:
+
+- srv/cars-service.js
+
+## ADDITIONAL - BTP DEPLOYMENT
 
 ### Install HANA CLI
 
