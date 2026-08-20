@@ -62,8 +62,9 @@
 
 13. Install any DB viewer like DBeaver and check DB entries of db.sqlite
 
-<<<<<<< HEAD
-14. Commit, push and merge to main
+14. Use https://excalidraw.com/ to see the data in a nice way
+
+15. Commit, push and merge to main
 
 - git add -A
 - git commit -m "feat: db schema complete"
@@ -73,22 +74,15 @@
 
 ## ODATA + custom logic
 
-15. Create ODATA layer:
-=======
-14. Use https://excalidraw.com/ to see the data in a nice way
-
-## ODATA + custom exits
-
-15. Create ODATA layer: 
->>>>>>> feat/db-schema-sqlite
+16. Create ODATA layer:
 
 - srv/cars-service.cds
 
-16. Create a nodeJS layer with addintional logic:
+17. Create a nodeJS layer with addintional logic:
 
 - srv/cars-service.js
 
-17. Check ODATA layer:
+18. Check ODATA layer:
 
 - cds watch
 - http://localhost:4004/odata/v4/cars/$metadata
