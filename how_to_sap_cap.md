@@ -62,17 +62,19 @@
 
 13. Install any DB viewer like DBeaver and check DB entries of db.sqlite
 
+14. Use https://excalidraw.com/ to see the data in a nice way
+
 ## ODATA + custom exits
 
-14. Create ODATA layer: 
+15. Create ODATA layer: 
 
 - srv/cars-service.cds
 
-15. Create a nodeJS layer with addintional logic:
+16. Create a nodeJS layer with addintional logic:
 
 - srv/cars-service.js
 
-16. Check ODATA layer:
+17. Check ODATA layer:
 
 - cds watch
 - http://localhost:4004/odata/v4/cars/$metadata
