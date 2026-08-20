@@ -114,6 +114,8 @@
 
 - js_sap-cap-cars.postman_collection.json
 
+20. Create a handler for rental price calculation this.after('READ', 'Rentals' ...)
+
 ## ADDITIONAL - BTP DEPLOYMENT
 
 ### Install HANA CLI
