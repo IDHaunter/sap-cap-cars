@@ -163,6 +163,24 @@
 
 - cds deploy --to sqlite:db.sqlite
 
+24. Create fiori app using Fiori Application Generator
+
+- Ctrl+Shift+P → Fiori: Open Application Generator
+- List Report Object Page
+- Use a Local CAP Project
+- sap.cap.cars (fiori namespace)
+- /Users/user/dev/js/sap-cap-cars/app  (folder for app)
+- accept Virtual Endpoints = Yes and set others to No
+- try "cds watch"
+
+25. After creation you may face with versions problems like "This application uses '@sap/cds' version 6.8, which is not compatible with the installed '@sap/cds-dk' version 10." then upgrade:
+
+- npm install @sap/cds@latest
+
+26. Run fiori app:
+
+- cds watch ( at http://localhost:4004 you will see the links to all fiori apps)
+
 ## ADDITIONAL - BTP DEPLOYMENT
 
 ### Install HANA CLI
