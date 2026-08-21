@@ -1,6 +1,6 @@
 # HOW TO SAP CAP FROM SCRATCH
 
-## Module 1 - CAP Foundations (Setup + CDS + Service Basics) ~1 day
+## Module 1 - CAP Foundations (Setup + CDS + Service Basics)
 
 1. Install Node.js and npm 
 
@@ -82,7 +82,7 @@
 - git merge feat/db-schema-sqlite
 - git push
 
-## Module 2 - Service Logic + Validations + Custom Actions ~2 days
+## Module 2 - Service Logic + Validations + Custom Actions
 
 16. Create an independent git branch for the service logic:
 
@@ -156,6 +156,12 @@
 - nmp test
 
 22. Create a Hook for claude to automaticaly run test on every change
+
+## Module 3 - Drafts + Fiori Elements
+
+23. Add draft annotation @odata.draft.enabled in cars-service.cds and rebuid database, check the service and databse: new entities and tables must be created automatically
+
+- cds deploy --to sqlite:db.sqlite
 
 ## ADDITIONAL - BTP DEPLOYMENT
 

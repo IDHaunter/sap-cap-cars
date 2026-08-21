@@ -2,6 +2,7 @@ using { sap.cap.cars as db } from '../db/schema';
 
 service CarsService {
 
+  @odata.draft.enabled
   entity Cars as projection on db.Cars {
     *,
     case
