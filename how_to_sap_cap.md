@@ -270,6 +270,80 @@ annotate service.Cars with {
     },
 ```
 
+32. Add new sections (rentals and maintenance) in the object page:
+
+- here rentals, maintenances - are associations from Cars entity.
+
+```
+    UI.Facets : [
+        {
+            $Type : 'UI.ReferenceFacet',
+            ID : 'RentalsFacet',
+            Label : 'Rentals',
+            Target : 'rentals/@UI.LineItem',
+        },
+        {
+            $Type : 'UI.ReferenceFacet',
+            ID : 'MaintenanceFacet',
+            Label : 'Maintenance',
+            Target : 'maintenances/@UI.LineItem',
+        },
+    ]
+```
+
+```
+annotate service.Rentals with @(
+    UI.LineItem : [
+        {
+            $Type : 'UI.DataField',
+            Label : 'Start Date',
+            Value : startDate,
+        },
+        {
+            $Type : 'UI.DataField',
+            Label : 'End Date',
+            Value : endDate,
+        },
+        {
+            $Type : 'UI.DataField',
+            Label : 'Customer',
+            Value : customer.email,
+        },
+        {
+            $Type : 'UI.DataField',
+            Label : 'Total Price',
+            Value : totalPrice,
+        },
+    ],
+);
+
+annotate service.Maintenance with @(
+    UI.LineItem : [
+        {
+            $Type : 'UI.DataField',
+            Label : 'Start Date',
+            Value : startDate,
+        },
+        {
+            $Type : 'UI.DataField',
+            Label : 'End Date',
+            Value : endDate,
+        },
+        {
+            $Type : 'UI.DataField',
+            Label : 'Description',
+            Value : description,
+        },
+        {
+            $Type : 'UI.DataField',
+            Label : 'Cost',
+            Value : cost,
+        },
+    ],
+);
+
+```
+
 ## ADDITIONAL - BTP DEPLOYMENT
 
 ### Install HANA CLI
