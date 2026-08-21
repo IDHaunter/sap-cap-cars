@@ -11,6 +11,18 @@ module.exports = cds.service.impl(async function () {
         validateDailyPrice(req)
     })
 
+    // Fiori's object page reads rentals via $expand, which never triggers the
+    // after('READ', 'Rentals') handler below, so totalPrice must be computed
+    // here too, reusing the car's own dailyPrice already present on the row.
+    this.after('READ', 'Cars', (cars) => {
+        const carList = Array.isArray(cars) ? cars : [cars]
+        for (const car of carList) {
+            for (const rental of car?.rentals ?? []) {
+                rental.totalPrice = calculateTotalPrice(rental.startDate, rental.endDate, car.dailyPrice)
+            }
+        }
+    })
+
     // ------------------- Rentals ------------------
 
     /**
@@ -46,6 +58,15 @@ module.exports = cds.service.impl(async function () {
             400,
             'Rentals must be created using the rent action'
         )
+    })
+
+    // Object page/list report only $select the columns referenced by UI annotations,
+    // so car_licensePlate must be forced in or totalPrice can't be computed below.
+    this.before('READ', 'Rentals', (req) => {
+        const { columns } = req.query.SELECT
+        if (columns && !columns.some(c => c.ref?.[0] === 'car_licensePlate')) {
+            columns.push({ ref: ['car_licensePlate'] })
+        }
     })
 
     /**
