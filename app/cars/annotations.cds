@@ -3,6 +3,17 @@ using CarsService as service from '../../srv/cars-service';
  // Object Page for Cars
 
 annotate service.Cars with @(
+    UI.HeaderInfo : {
+        TypeName : 'Car',
+        TypeNamePlural : 'Cars',
+        Title : {
+            Value : model,
+        },
+        Description : {
+            Value : brand,
+        },
+    },
+
     UI.FieldGroup #GeneratedGroup : {
 
         $Type : 'UI.FieldGroupType',
@@ -46,6 +57,7 @@ annotate service.Cars with @(
             },
         ],
     },
+
     UI.Facets : [
         {
             $Type : 'UI.ReferenceFacet',

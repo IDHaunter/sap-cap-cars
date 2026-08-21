@@ -255,6 +255,21 @@ annotate service.Cars with {
 }
 ```
 
+31. Add header info for object page:
+
+```
+    UI.HeaderInfo : {
+        TypeName : 'Car',
+        TypeNamePlural : 'Cars',
+        Title : {
+            Value : model,
+        },
+        Description : {
+            Value : brand,
+        },
+    },
+```
+
 ## ADDITIONAL - BTP DEPLOYMENT
 
 ### Install HANA CLI
