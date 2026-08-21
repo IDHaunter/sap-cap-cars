@@ -49,6 +49,11 @@ annotate service.Cars with @(
             Target : '@UI.FieldGroup#GeneratedGroup',
         },
     ],
+    UI.SelectionFields : [
+        status_code,
+        category_code,
+        year,
+    ],
     UI.LineItem : [
         {
             $Type : 'UI.DataField',
@@ -90,7 +95,7 @@ annotate service.Cars with @(
 );
 
 annotate service.Cars with {
-    status @Common.ValueList : {
+    status_code @Common.ValueList : {
         $Type : 'Common.ValueListType',
         CollectionPath : 'AvailabilityStatus',
         Parameters : [
@@ -108,5 +113,21 @@ annotate service.Cars with {
                 ValueListProperty : 'criticality',
             },
         ],
-    }
+    } @Common.ValueListWithFixedValues : true;
+
+    category @Common.ValueList : {
+        $Type : 'Common.ValueListType',
+        CollectionPath : 'Category',
+        Parameters : [
+            {
+                $Type : 'Common.ValueListParameterInOut',
+                LocalDataProperty : category_code,
+                ValueListProperty : 'code',
+            },
+            {
+                $Type : 'Common.ValueListParameterDisplayOnly',
+                ValueListProperty : 'name',
+            },
+        ],
+    };
 };

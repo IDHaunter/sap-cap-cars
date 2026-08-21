@@ -181,6 +181,80 @@
 
 - cds watch ( at http://localhost:4004 you will see the links to all fiori apps)
 
+27. using only fiori app app/cars/annotations.cds add fields for associations like these:
+
+```
+  {
+      $Type : 'UI.DataField',
+      Label : 'Status',
+      Value : status.name,
+      Criticality : status.criticality,
+  },
+  {
+      $Type : 'UI.DataField',
+      Label : 'Category',
+      Value : category.name,
+  },
+```
+
+28. add filters using:
+
+```
+    UI.SelectionFields : [
+        status_code,
+        category_code,
+        year,
+    ],
+```
+
+29. Make status filter like a drop box with list of values:
+
+```
+annotate service.Cars with {
+    status_code @Common.ValueList : {
+        $Type : 'Common.ValueListType',
+        CollectionPath : 'AvailabilityStatus',
+        Parameters : [
+            {
+                $Type : 'Common.ValueListParameterInOut',
+                LocalDataProperty : status_code,
+                ValueListProperty : 'code',
+            },
+            {
+                $Type : 'Common.ValueListParameterDisplayOnly',
+                ValueListProperty : 'name',
+            },
+            {
+                $Type : 'Common.ValueListParameterDisplayOnly',
+                ValueListProperty : 'criticality',
+            },
+        ],
+    } @Common.ValueListWithFixedValues : true;
+}
+```
+
+30. Make categories filter like a table with values:
+
+```
+annotate service.Cars with {
+    category @Common.ValueList : {
+        $Type : 'Common.ValueListType',
+        CollectionPath : 'Category',
+        Parameters : [
+            {
+                $Type : 'Common.ValueListParameterInOut',
+                LocalDataProperty : category_code,
+                ValueListProperty : 'code',
+            },
+            {
+                $Type : 'Common.ValueListParameterDisplayOnly',
+                ValueListProperty : 'name',
+            },
+        ],
+    };
+}
+```
+
 ## ADDITIONAL - BTP DEPLOYMENT
 
 ### Install HANA CLI
