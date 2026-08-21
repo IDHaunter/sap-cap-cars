@@ -1,7 +1,12 @@
 using CarsService as service from '../../srv/cars-service';
+
+ // Object Page for Cars
+
 annotate service.Cars with @(
     UI.FieldGroup #GeneratedGroup : {
+
         $Type : 'UI.FieldGroupType',
+
         Data : [
             {
                 $Type : 'UI.DataField',
@@ -49,11 +54,18 @@ annotate service.Cars with @(
             Target : '@UI.FieldGroup#GeneratedGroup',
         },
     ],
+);
+
+//  List Report for Cars
+
+annotate service.Cars with @(
+
     UI.SelectionFields : [
         status_code,
         category_code,
         year,
     ],
+
     UI.LineItem : [
         {
             $Type : 'UI.DataField',
@@ -93,6 +105,8 @@ annotate service.Cars with @(
         },
     ],
 );
+
+// Filters for cars
 
 annotate service.Cars with {
     status_code @Common.ValueList : {
