@@ -30,8 +30,9 @@ annotate service.Cars with @(
             },
             {
                 $Type : 'UI.DataField',
-                Label : 'status_code',
-                Value : status_code,
+                Label : 'Status',
+                Value : status.name,
+                Criticality : status.criticality,
             },
             {
                 $Type : 'UI.DataField',
@@ -73,6 +74,12 @@ annotate service.Cars with @(
             $Type : 'UI.DataField',
             Label : 'DailyPrice',
             Value : dailyPrice,
+        },
+        {
+            $Type : 'UI.DataField',
+            Label : 'Status',
+            Value : status.name,
+            Criticality : status.criticality,
         },
         {
             $Type : 'UI.DataField',
