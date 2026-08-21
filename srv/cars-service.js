@@ -6,7 +6,7 @@ module.exports = cds.service.impl(async function () {
 
     // ------------------- Cars ---------------------
 
-    this.before(['CREATE', 'UPDATE'], 'Cars', (req) => {
+    this.before(['NEW', 'CREATE', 'UPDATE'], ['Cars', 'Cars.drafts'], (req) => {
         validateCarYear(req)
         validateDailyPrice(req)
     })

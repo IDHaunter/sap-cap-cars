@@ -33,6 +33,11 @@ annotate service.Cars with @(
                 Label : 'status_code',
                 Value : status_code,
             },
+            {
+                $Type : 'UI.DataField',
+                Label : 'Category',
+                Value : category.name,
+            },
         ],
     },
     UI.Facets : [
@@ -46,28 +51,33 @@ annotate service.Cars with @(
     UI.LineItem : [
         {
             $Type : 'UI.DataField',
-            Label : 'licensePlate',
+            Label : 'License Plate',
             Value : licensePlate,
         },
         {
             $Type : 'UI.DataField',
-            Label : 'brand',
+            Label : 'Brand',
             Value : brand,
         },
         {
             $Type : 'UI.DataField',
-            Label : 'model',
+            Label : 'Model',
             Value : model,
         },
         {
             $Type : 'UI.DataField',
-            Label : 'year',
+            Label : 'Year',
             Value : year,
         },
         {
             $Type : 'UI.DataField',
-            Label : 'dailyPrice',
+            Label : 'DailyPrice',
             Value : dailyPrice,
+        },
+        {
+            $Type : 'UI.DataField',
+            Label : 'Category',
+            Value : category.name,
         },
     ],
 );
@@ -93,4 +103,3 @@ annotate service.Cars with {
         ],
     }
 };
-

@@ -26,6 +26,7 @@ service CarsService {
     ) returns Maintenance;
   };
 
+  entity Category            as projection on db.Category;
   entity Customers           as projection on db.Customers;
   entity Rentals             as projection on db.Rentals;
   entity Maintenance         as projection on db.Maintenance;
