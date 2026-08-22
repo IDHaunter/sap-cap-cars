@@ -1,5 +1,6 @@
 using { sap.cap.cars as db } from '../db/schema';
 
+@odata @mcp
 service CarsService {
 
   @odata.draft.enabled

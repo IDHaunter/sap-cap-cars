@@ -344,14 +344,24 @@ annotate service.Maintenance with @(
 
 ```
 
-## ADDITIONAL - BTP DEPLOYMENT
+## ADDITIONAL - BTP DEPLOYMENT AND MCP
 
 ### Install HANA CLI
 
-npm install -g hana-cli
-hana-cli --version
+- npm install -g hana-cli
+- hana-cli --version
 
 ### Install CF client
 
-brew trust cloudfoundry/tap
-brew install cloudfoundry/tap/cf-cli@8
+- brew trust cloudfoundry/tap
+- brew install cloudfoundry/tap/cf-cli@8
+
+### MCP
+
+- npm add @cap-js/mcp
+- add annotation for service (@odata @mcp)
+- npx @modelcontextprotocol/inspector
+- add new server
+- streamable-http
+- http://localhost:4004/mcp/cars
+- run claude code and try to answer questions about car service (claude automaticaly searches local mcp servers)
