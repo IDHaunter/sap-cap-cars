@@ -344,6 +344,25 @@ annotate service.Maintenance with @(
 
 ```
 
+33. Add `rent` and `setToMaintenance` actions to the header of Object Page
+
+- annotate service.Cars with these elements:
+
+```
+    UI.Identification : [
+        {
+            $Type : 'UI.DataFieldForAction',
+            Action : 'CarsService.rent',
+            Label : 'Rent',
+        },
+        {
+            $Type : 'UI.DataFieldForAction',
+            Action : 'CarsService.setToMaintenance',
+            Label : 'Set to Maintenance',
+        },
+    ],
+```
+
 ## ADDITIONAL - BTP DEPLOYMENT AND MCP
 
 ### Install HANA CLI

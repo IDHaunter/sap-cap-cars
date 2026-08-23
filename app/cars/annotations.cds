@@ -14,6 +14,19 @@ annotate service.Cars with @(
         },
     },
 
+    UI.Identification : [
+        {
+            $Type : 'UI.DataFieldForAction',
+            Action : 'CarsService.rent',
+            Label : 'Rent',
+        },
+        {
+            $Type : 'UI.DataFieldForAction',
+            Action : 'CarsService.setToMaintenance',
+            Label : 'Set to Maintenance',
+        },
+    ],
+
     UI.FieldGroup #GeneratedGroup : {
 
         $Type : 'UI.FieldGroupType',
