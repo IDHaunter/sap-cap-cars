@@ -384,3 +384,9 @@ annotate service.Maintenance with @(
 - streamable-http
 - http://localhost:4004/mcp/cars
 - run claude code and try to answer questions about car service (claude automaticaly searches local mcp servers)
+
+## Usefull Links
+
+- [CAP Documentation](https://cap.cloud.sap/docs/)
+- [Fiori elements showcase](https://github.com/SAP-samples/fiori-elements-feature-showcase)
+- [SAP Fiori Design Guidelines — Frameworks & Floorplans](https://www.sap.com/design-system/fiori-design-web/v1-84/discover/frameworks/smart-templates)
