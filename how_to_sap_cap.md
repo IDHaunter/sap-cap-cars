@@ -363,6 +363,36 @@ annotate service.Maintenance with @(
     ],
 ```
 
+34. Add header facets with 2 data points: `dailyPrice` and `status`. They should be visible only in display mode (see `IsActiveEntity` property).
+
+```
+    UI.HeaderFacets : [
+        {
+            $Type : 'UI.ReferenceFacet',
+            ID : 'DailyPriceFacet',
+            Target : '@UI.DataPoint#DailyPrice',
+            ![@UI.Hidden] : { $edmJson : { $Not : [ { $Path : 'IsActiveEntity' } ] } },
+        },
+        {
+            $Type : 'UI.ReferenceFacet',
+            ID : 'StatusFacet',
+            Target : '@UI.DataPoint#Status',
+            ![@UI.Hidden] : { $edmJson : { $Not : [ { $Path : 'IsActiveEntity' } ] } },
+        },
+    ],
+
+    UI.DataPoint #DailyPrice : {
+        Value : dailyPrice,
+        Title : 'Daily Price',
+    },
+
+    UI.DataPoint #Status : {
+        Value : status.name,
+        Criticality : status.criticality,
+        Title : 'Status',
+    },
+```
+
 ## ADDITIONAL - BTP DEPLOYMENT AND MCP
 
 ### Install HANA CLI

@@ -14,6 +14,32 @@ annotate service.Cars with @(
         },
     },
 
+    UI.HeaderFacets : [
+        {
+            $Type : 'UI.ReferenceFacet',
+            ID : 'DailyPriceFacet',
+            Target : '@UI.DataPoint#DailyPrice',
+            ![@UI.Hidden] : { $edmJson : { $Not : [ { $Path : 'IsActiveEntity' } ] } },
+        },
+        {
+            $Type : 'UI.ReferenceFacet',
+            ID : 'StatusFacet',
+            Target : '@UI.DataPoint#Status',
+            ![@UI.Hidden] : { $edmJson : { $Not : [ { $Path : 'IsActiveEntity' } ] } },
+        },
+    ],
+
+    UI.DataPoint #DailyPrice : {
+        Value : dailyPrice,
+        Title : 'Daily Price',
+    },
+
+    UI.DataPoint #Status : {
+        Value : status.name,
+        Criticality : status.criticality,
+        Title : 'Status',
+    },
+
     UI.Identification : [
         {
             $Type : 'UI.DataFieldForAction',
