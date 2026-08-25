@@ -17,8 +17,8 @@
 - `db/` — CDS data model (`schema.cds`) and CSV seed data (`db/data/<namespace>-<entity>.csv`)
 - `srv/` — OData service definitions (`.cds`) and Node.js service logic (`.js`)
 - `app/` — Fiori Elements UI apps
-- `course_instructions.md` — full course curriculum/spec to follow (do not override it)
-- `how_to_sap_cap.md` — step-by-step log of what's been done so far
+- `course_instructions.md` — full course description (do not use it, it is for humans)
+- `how_to_sap_cap.md` — step-by-step log of what's been done so far (do not use it, it is for humans)
 
 ## Working Conventions
 
@@ -26,7 +26,6 @@
 - CSV seed files must be named `<namespace>-<entity>.csv` matching `schema.cds`, with all columns present.
 - Service Definition & Implementation: The CDS service definition and its custom JavaScript/TypeScript handler must share the exact same base name and reside in the same folder.
 Example: service.cds and service.js (or service.ts)
-- UI Annotations Isolation: All Fiori/UI annotations must be separated into a dedicated CDS file using the -ui suffix. Example: service-ui.cds
 - Common commands: `cds watch` (run dev server), `cds deploy --to sqlite` (rebuild local DB).
 
 ## Custom Action Handler Style

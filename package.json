@@ -10,12 +10,47 @@
   },
   "cds": {
     "requires": {
+
       "db": {
         "kind": "sqlite",
         "credentials": {
           "url": "db.sqlite"
         }
+      },
+
+      "auth": {
+        "kind": "mocked",
+        "users": {
+          "CUST000001": {
+            "password": "password",
+            "roles": [
+              "User"
+            ]
+          },
+
+          "CUST000002": {
+            "password": "password",
+            "roles": [
+              "User"
+            ]
+          },
+
+          "CUST000003": {
+            "password": "password",
+            "roles": [
+              "User"
+            ]
+          },
+
+          "admin": {
+            "password": "admin",
+            "roles": [
+              "Admin"
+            ]
+          }
+        }
       }
+      
     },
     "[test]": {
       "requires": {
