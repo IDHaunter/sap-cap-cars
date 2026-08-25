@@ -438,6 +438,35 @@ annotate service.Maintenance with @(
     ],
 ```
 
+36. [Add side effects](https://help.sap.com/docs/ABAP_PLATFORM_NEW/468a97775123488ab3345a0c48cadd8f/955ae316856a4dcdbe07a1dbf584fa98.html?locale=en-US&version=202310.latest)
+
+```
+ annotate service.Cars with @(
+    Common.SideEffects #RentalsEffect : {
+        TargetProperties : [
+            'status_code',
+            'status/name',
+            'status/criticality'
+        ],
+        TargetEntities : [
+            'rentals'
+        ]
+    },
+
+    Common.SideEffects #MaintenancesEffect : {
+        TargetProperties : [
+            'status_code',
+            'status/name',
+            'status/criticality'
+        ],
+        TargetEntities : [
+            'maintenances'
+        ]
+    }
+
+ );
+```
+
 ## ADDITIONAL - BTP DEPLOYMENT AND MCP
 
 ### Install HANA CLI
