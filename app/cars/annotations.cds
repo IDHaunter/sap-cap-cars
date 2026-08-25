@@ -45,11 +45,25 @@ annotate service.Cars with @(
             $Type : 'UI.DataFieldForAction',
             Action : 'CarsService.rent',
             Label : 'Rent',
+            ![@UI.Hidden] : {
+                $edmJson : {
+                    $Not : [
+                        { $Path : 'IsActiveEntity' }
+                    ]
+                }
+            }
         },
         {
             $Type : 'UI.DataFieldForAction',
             Action : 'CarsService.setToMaintenance',
             Label : 'Set to Maintenance',
+            ![@UI.Hidden] : {
+                $edmJson : {
+                    $Not : [
+                        { $Path : 'IsActiveEntity' }
+                    ]
+                }
+            }
         },
     ],
 

@@ -393,6 +393,51 @@ annotate service.Maintenance with @(
     },
 ```
 
+35. Hide custom actions (`rent`, `setToMaintenance`) from Object Page when in edit mode (see `IsActiveEntity` property)
+
+- add this block to the UI.Identification for each action
+
+```
+    ![@UI.Hidden] : {
+        $edmJson : {
+            $Not : [
+                { $Path : 'IsActiveEntity' }
+            ]
+        }
+    }
+```
+
+- full version will be:
+
+```
+    UI.Identification : [
+        {
+            $Type : 'UI.DataFieldForAction',
+            Action : 'CarsService.rent',
+            Label : 'Rent',
+            ![@UI.Hidden] : {
+                $edmJson : {
+                    $Not : [
+                        { $Path : 'IsActiveEntity' }
+                    ]
+                }
+            }
+        },
+        {
+            $Type : 'UI.DataFieldForAction',
+            Action : 'CarsService.setToMaintenance',
+            Label : 'Set to Maintenance',
+            ![@UI.Hidden] : {
+                $edmJson : {
+                    $Not : [
+                        { $Path : 'IsActiveEntity' }
+                    ]
+                }
+            }
+        },
+    ],
+```
+
 ## ADDITIONAL - BTP DEPLOYMENT AND MCP
 
 ### Install HANA CLI
