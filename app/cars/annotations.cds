@@ -3,22 +3,25 @@ using CarsService as service from '../../srv/cars-service';
  // Object Page for Cars
 
 annotate service.Cars with @(
+
+    // Title text and subtitle at the top of the page
     UI.HeaderInfo : {
-        TypeName : 'Car',
-        TypeNamePlural : 'Cars',
+        TypeName : 'Car',            // singular entity name
+        TypeNamePlural : 'Cars',     // plural entity name
         Title : {
-            Value : model,
+            Value : model,           // dynamic: shows the record's "model" field
         },
         Description : {
-            Value : brand,
+            Value : brand,           // dynamic: shows the record's "brand" field
         },
     },
 
+    // Defines compact metric/KPI tiles displayed in the header zone
     UI.HeaderFacets : [
         {
-            $Type : 'UI.ReferenceFacet',
+            $Type : 'UI.ReferenceFacet', // This is not a data facet. It is a pointer to another annotation
             ID : 'DailyPriceFacet',
-            Target : '@UI.DataPoint#DailyPrice',
+            Target : '@UI.DataPoint#DailyPrice', // The annotation path this facet resolves to
             ![@UI.Hidden] : { $edmJson : { $Not : [ { $Path : 'IsActiveEntity' } ] } },
         },
         {
@@ -29,39 +32,63 @@ annotate service.Cars with @(
         },
     ],
 
+    // Target for Facet 1
     UI.DataPoint #DailyPrice : {
         Value : dailyPrice,
         Title : 'Daily Price',
     },
 
+    // Target for Facet 2
     UI.DataPoint #Status : {
         Value : status.name,
         Criticality : status.criticality,
         Title : 'Status',
     },
 
+    // "Edit" / "Save" button 
+    UI.UpdateHidden : {
+        $edmJson : {
+            $Not : {
+                $Path : '/Configuration/isAdmin'
+            }
+        }
+    },
+
+    // "Delete" / "Remove" button on a List Page row action or Object Page.
+    UI.DeleteHidden : {
+        $edmJson : {
+            $Not : {
+                $Path : '/Configuration/isAdmin'
+            }
+        }
+    },
+
+    // Buttons
     UI.Identification : [
+        
         {
-            $Type : 'UI.DataFieldForAction',
-            Action : 'CarsService.rent',
-            Label : 'Rent',
-            ![@UI.Hidden] : {
+            $Type : 'UI.DataFieldForAction', // renders as an action button
+            Action : 'CarsService.rent',     // calls the OData action "rent"
+            Label : 'Rent',                  // button text
+            ![@UI.Hidden] : {                // ← hides the button when true
                 $edmJson : {
                     $Not : [
-                        { $Path : 'IsActiveEntity' }
+                        { $Path : 'IsActiveEntity' }       // ← path on the DATA RECORD
                     ]
                 }
             }
         },
+
         {
             $Type : 'UI.DataFieldForAction',
             Action : 'CarsService.setToMaintenance',
             Label : 'Set to Maintenance',
+
             ![@UI.Hidden] : {
                 $edmJson : {
-                    $Not : [
-                        { $Path : 'IsActiveEntity' }
-                    ]
+                    $Not : {
+                        $Path : '/Configuration/isAdmin'    // ← path on a CONFIG MODEL
+                    }
                 }
             }
         },
@@ -231,6 +258,11 @@ annotate service.Cars with @(
             Value : category.name,
         },
     ],
+
+    // "+" (Create / New / Add) button on a List Page (overview page).
+    UI.CreateHidden : {
+        $edmJson : true
+    },
 );
 
 // Filters for cars

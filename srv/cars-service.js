@@ -4,6 +4,22 @@ module.exports = cds.service.impl(async function () {
 
     const { Cars, Rentals, Maintenance } = this.entities
 
+    // ----- Singltone for user authentication ------
+
+    this.on('READ', 'Configuration', async (req) => {
+
+        console.log('USER:', req.user);
+        console.log('USER ID:', req.user.id);
+        const isAdmin = req.user.is('Admin');
+        console.log('isAdmin:', isAdmin);
+
+        return {
+            ID: 'config',
+            userId: req.user.id,
+            isAdmin: isAdmin
+        }
+    })
+
     // ------------------- Cars ---------------------
 
     this.before(['NEW', 'CREATE', 'UPDATE'], ['Cars', 'Cars.drafts'], (req) => {

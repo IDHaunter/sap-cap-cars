@@ -124,4 +124,13 @@ service CarsService {
   ]
   entity AvailabilityStatus  as projection on db.AvailabilityStatus;
 
+  //dynamically generated entity for the currently authenticated user
+  @odata.singleton
+  @cds.persistence.skip
+  entity Configuration {
+      key ID : String;
+      userId : String;
+      isAdmin : Boolean;
+  }
+
 }

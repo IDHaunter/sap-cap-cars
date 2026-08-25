@@ -523,6 +523,82 @@ annotate service.Maintenance with @(
   ]
 ```
 
+40. Singltone for user authentication to use in fiori as visibility sign
+
+- add to the service.cds:
+
+```
+  @odata.singleton
+  @cds.persistence.skip
+  entity Configuration {
+      key ID : String;
+      userId : String;
+      isAdmin : Boolean;
+  }
+```
+
+- add to service.js:
+
+```
+    this.on('READ', 'Configuration', async (req) => {
+
+        const isAdmin = req.user.is('Admin');
+
+        return {
+            ID: 'config',
+            userId: req.user.id,
+            isAdmin: isAdmin
+        }
+    })
+```
+
+- in fiori app annotations.cds use this construction:
+
+```
+    // Controls the "+" (Create / New / Add) button on a List Page (overview page).
+    UI.CreateHidden : {
+        $edmJson : {
+            $Not : {
+                $Path : '/Configuration/isAdmin'
+            }
+        }
+    },
+
+    // Controls the "Edit" / "Save" button on an Object Page (detail page).
+    UI.UpdateHidden : {
+        $edmJson : {
+            $Not : {
+                $Path : '/Configuration/isAdmin'
+            }
+        }
+    },
+
+    // Controls the "Delete" / "Remove" button on a List Page row action or Object Page.
+    UI.DeleteHidden : {
+        $edmJson : {
+            $Not : {
+                $Path : '/Configuration/isAdmin'
+            }
+        }
+    },
+
+    UI.Identification : [
+        {
+            $Type : 'UI.DataFieldForAction',
+            Action : 'CarsService.setToMaintenance',
+            Label : 'Set to Maintenance',
+
+            ![@UI.Hidden] : {
+                $edmJson : {
+                    $Not : {
+                        $Path : '/Configuration/isAdmin'
+                    }
+                }
+            }
+        },
+    ],
+```
+
 ## ADDITIONAL - BTP DEPLOYMENT AND MCP
 
 ### Install HANA CLI
