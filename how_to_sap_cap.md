@@ -499,6 +499,8 @@ annotate service.Maintenance with @(
     ) returns Rentals;
 ```
 
+38. Attach side effects directly to the actions (in other case after action execution the side effects will not accured)
+
 ## ADDITIONAL - BTP DEPLOYMENT AND MCP
 
 ### Install HANA CLI

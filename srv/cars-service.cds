@@ -13,6 +13,16 @@ service CarsService {
     end as status_code : String(2),
     status : Association to AvailabilityStatus on status.code = status_code
   } actions {
+    @Common.SideEffects #RentEffect : {
+        TargetEntities : [
+            'rentals'
+        ],
+        TargetProperties : [
+            'status_code',
+            'status/name',
+            'status/criticality'
+        ]
+    }
     action rent(
       startDate   : Date,
       endDate     : Date,
@@ -41,6 +51,16 @@ service CarsService {
     }
     ) returns Rentals;
 
+    @Common.SideEffects #MaintenancesEffect : {
+        TargetProperties : [
+            'status_code',
+            'status/name',
+            'status/criticality'
+        ],
+        TargetEntities : [
+            'maintenances'
+        ]
+    }
     action setToMaintenance(
       startDate   : Date,
       endDate     : Date,

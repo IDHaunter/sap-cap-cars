@@ -1,31 +1,5 @@
 using CarsService as service from '../../srv/cars-service';
 
- // Side effects
- annotate service.Cars with @(
-    Common.SideEffects #RentalsEffect : {
-        TargetProperties : [
-            'status_code',
-            'status/name',
-            'status/criticality'
-        ],
-        TargetEntities : [
-            'rentals'
-        ]
-    },
-
-    Common.SideEffects #MaintenancesEffect : {
-        TargetProperties : [
-            'status_code',
-            'status/name',
-            'status/criticality'
-        ],
-        TargetEntities : [
-            'maintenances'
-        ]
-    }
-
- );
-
  // Object Page for Cars
 
 annotate service.Cars with @(
