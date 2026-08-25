@@ -5,6 +5,10 @@ using { sap.cap.cars as db } from '../db/schema';
 service CarsService {
 
   @odata.draft.enabled
+  @restrict: [
+    { grant: 'READ', to: ['User', 'Admin']},
+    { grant: '*', to: ['Admin']}
+  ]
   entity Cars as projection on db.Cars {
     *,
     case
@@ -24,6 +28,9 @@ service CarsService {
             'status/criticality'
         ]
     }
+    @restrict : [
+      { grant: 'EXECUTE', to: ['User', 'Admin'] }
+    ]
     action rent(
       startDate   : Date,
       endDate     : Date,
@@ -62,6 +69,9 @@ service CarsService {
             'maintenances'
         ]
     }
+    @restrict : [
+      { grant: 'EXECUTE', to: ['Admin'] }
+    ]
     action setToMaintenance(
       startDate   : Date,
       endDate     : Date,
@@ -70,10 +80,48 @@ service CarsService {
     ) returns Maintenance;
   };
 
+  @restrict: [
+    { grant: 'READ', to: ['User', 'Admin'] },
+    { grant: '*', to: ['Admin'] }
+  ]
   entity Category            as projection on db.Category;
+  
+  @restrict: [
+    {
+      grant: 'READ',
+      to: ['User'],
+      where: 'ID = $user.id'
+    },
+    {
+      grant: '*',
+      to: ['Admin']
+    }
+  ]
   entity Customers           as projection on db.Customers;
+  
+  @restrict: [
+    {
+      grant: 'READ',
+      to: ['User'],
+      where: 'customer_ID = $user.id'
+    },
+    {
+      grant: '*',
+      to: ['Admin']
+    }
+  ]
   entity Rentals             as projection on db.Rentals;
+  
+  @restrict: [
+    { grant: 'READ', to: ['User', 'Admin']},
+    { grant: '*', to: ['Admin'] }
+  ]
   entity Maintenance         as projection on db.Maintenance;
+  
+  @restrict: [
+    { grant: 'READ', to: ['User', 'Admin']},
+    { grant: '*', to: ['Admin'] }
+  ]
   entity AvailabilityStatus  as projection on db.AvailabilityStatus;
 
 }

@@ -501,6 +501,28 @@ annotate service.Maintenance with @(
 
 38. Attach side effects directly to the actions (in other case after action execution the side effects will not accured)
 
+39. Enforce role-based access control
+
+- use restrict and require annotations, sometimes with user id limitations
+
+```
+@requires: 'authenticated-user'
+```
+
+```
+  @restrict: [
+    {
+      grant: 'READ',
+      to: ['User'],
+      where: 'ID = $user.id'
+    },
+    {
+      grant: '*',
+      to: ['Admin']
+    }
+  ]
+```
+
 ## ADDITIONAL - BTP DEPLOYMENT AND MCP
 
 ### Install HANA CLI
