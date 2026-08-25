@@ -16,7 +16,29 @@ service CarsService {
     action rent(
       startDate   : Date,
       endDate     : Date,
-      customer_ID : String(10)
+      customer_ID : String(10) @Common.ValueList : {
+        $Type : 'Common.ValueListType',
+        CollectionPath : 'Customers',
+        Parameters : [
+            {
+                $Type : 'Common.ValueListParameterInOut',
+                LocalDataProperty : customer_ID,
+                ValueListProperty : 'ID'
+            },
+            {
+                $Type : 'Common.ValueListParameterDisplayOnly',
+                ValueListProperty : 'firstName'
+            },
+            {
+                $Type : 'Common.ValueListParameterDisplayOnly',
+                ValueListProperty : 'lastName'
+            },
+            {
+                $Type : 'Common.ValueListParameterDisplayOnly',
+                ValueListProperty : 'email'
+            }
+        ]
+    }
     ) returns Rentals;
 
     action setToMaintenance(

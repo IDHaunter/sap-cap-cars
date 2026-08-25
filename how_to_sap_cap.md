@@ -467,6 +467,38 @@ annotate service.Maintenance with @(
  );
 ```
 
+37. Add a list of clients instead of client ID in action "rent" representation
+
+```
+    action rent(
+      startDate   : Date,
+      endDate     : Date,
+      customer_ID : String(10) @Common.ValueList : {
+        $Type : 'Common.ValueListType',
+        CollectionPath : 'Customers',
+        Parameters : [
+            {
+                $Type : 'Common.ValueListParameterInOut',
+                LocalDataProperty : customer_ID,
+                ValueListProperty : 'ID'
+            },
+            {
+                $Type : 'Common.ValueListParameterDisplayOnly',
+                ValueListProperty : 'firstName'
+            },
+            {
+                $Type : 'Common.ValueListParameterDisplayOnly',
+                ValueListProperty : 'lastName'
+            },
+            {
+                $Type : 'Common.ValueListParameterDisplayOnly',
+                ValueListProperty : 'email'
+            }
+        ]
+    }
+    ) returns Rentals;
+```
+
 ## ADDITIONAL - BTP DEPLOYMENT AND MCP
 
 ### Install HANA CLI
