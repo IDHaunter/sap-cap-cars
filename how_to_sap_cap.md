@@ -599,7 +599,58 @@ annotate service.Maintenance with @(
     ],
 ```
 
-41. Add custom button to the object page
+41. [Add custom button to the object page](https://ui5.sap.com/?utm_source=chatgpt.com#/topic/7619517a92414e27b71f02094bd08d06)
+
+- Create a JS function in the `webapp/js/CustomActions.js` file
+
+```
+    sap.ui.define([
+        "sap/m/MessageToast"
+    ], function (MessageToast) {
+        "use strict";
+
+        return {
+            onTest: function (oContext, aSelectedContexts) {
+                MessageToast.show("Rent Custom button pressed!");
+            }
+        };
+    });
+```
+
+- Extend the manifest.json file with the link to this new js function handler
+
+```
+        "CarsObjectPage": {
+            "type": "Component",
+            "id": "CarsObjectPage",
+            "name": "sap.fe.templates.ObjectPage",
+            "options": {
+                "settings": {
+                    "editableHeaderContent": false,
+                    "contextPath": "/Cars",
+
+                    "content": {
+                        "header": {
+                            "actions": {
+                                "Test": {
+                                    "text": "Rent custom",
+                                    "press": "sap.cap.cars.cars.ext.CustomActions.onTest",
+                                    "visible": true,
+                                    "enabled": true,
+                                    "requiresSelection": false,
+                                    "position": {
+                                        "anchor": "DataFieldForAction::CarsService.rent",
+                                        "placement": "Before"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+```
+
 
 ## ADDITIONAL - BTP DEPLOYMENT AND MCP
 

@@ -65,19 +65,6 @@ annotate service.Cars with @(
 
     // Buttons
     UI.Identification : [
-        
-        {
-            $Type : 'UI.DataFieldForAction', // renders as an action button
-            Action : 'CarsService.rent',     // calls the OData action "rent"
-            Label : 'Rent',                  // button text
-            ![@UI.Hidden] : {                // ← hides the button when true
-                $edmJson : {
-                    $Not : [
-                        { $Path : 'IsActiveEntity' }       // ← path on the DATA RECORD
-                    ]
-                }
-            }
-        },
 
         {
             $Type : 'UI.DataFieldForAction',
