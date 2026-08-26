@@ -20,7 +20,8 @@ service CarsService {
   } actions {
     @Common.SideEffects #RentEffect : {
         TargetEntities : [
-            'rentals'
+            'rentals',
+            'maintenances'
         ],
         TargetProperties : [
             'status_code',

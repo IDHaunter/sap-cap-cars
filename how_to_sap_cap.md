@@ -658,6 +658,11 @@ annotate service.Maintenance with @(
 - create CustomActions.js
 - add automaticaly userID to the rent period dialog
 
+43. [Create custom events for maintenance](https://cap.cloud.sap/docs/guides/events/core-concepts#emitters-and-receivers)
+
+- add ivent imiter and ivent handler in the car-service.js
+- add side effect for maintenance after rent event in the car-service.cds
+
 ## ADDITIONAL - BTP DEPLOYMENT AND MCP
 
 ### Install HANA CLI

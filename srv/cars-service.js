@@ -65,9 +65,114 @@ module.exports = cds.service.impl(async function () {
 
         await INSERT.into(Rentals).entries(rental)
 
-        return this.run(SELECT.one
+        // EMIT CUSTOM EVENT 
+        // Get the created rental with all fields
+        const createdRental = await SELECT.one
             .from(Rentals)
-            .where({ ID: rental.ID }))
+            .where({ ID: rental.ID })
+        
+        // Log event creation
+        console.log(`[Emition] Rental.Created with ID = ${createdRental.ID}`)     
+
+        // Emit event with the rental data
+        await this.emit('Rental.Created', createdRental)
+
+        return createdRental
+    })
+
+
+    /**
+     * REGISTER EVENT HANDLER for Rental.Created event
+     */
+
+    this.on('Rental.Created', async (event) => {
+
+        const rentalData = event.data
+
+        console.log(`[Handler] Rental.Created with rentalData =\n${JSON.stringify(rentalData, null, 2)}`)
+        
+        // Get the car's license plate
+        const licensePlate = rentalData.car_licensePlate
+
+        // Unique description for the auto scheduled maintenance
+        const autoDescription = '[Auto] Scheduled maintenance after high usage'
+        
+        // Calculate the date 12 months ago from the rental star
+        const twelveMonthsAgo = new Date(rentalData.startDate)
+        twelveMonthsAgo.setFullYear(twelveMonthsAgo.getFullYear() - 1)
+        const twelveMonthsAgoStr = twelveMonthsAgo.toISOString().split('T')[0]
+
+        // Find the date of last auto scheduled maintenance
+        const maintananceRow = await SELECT.one
+        .from(Maintenance)
+        .columns('max(startDate) as maxStartDate')
+        .where({
+            car_licensePlate: licensePlate,
+            description: autoDescription,
+            startDate: {
+                '>=': twelveMonthsAgoStr,
+                '<=': rentalData.startDate
+            }
+        })
+
+        const lastAutoScheduledMaintenance = maintananceRow?.maxStartDate
+        
+        // Calculate the effective lower limit (either last maintanance or 12 months ago)
+        let minStartDate = twelveMonthsAgoStr
+        if (lastAutoScheduledMaintenance && lastAutoScheduledMaintenance > twelveMonthsAgoStr) {
+            minStartDate = lastAutoScheduledMaintenance
+        }
+        
+        // Count rentals in the last 12 months for this car before rent date
+        const rentals = await SELECT
+            .from(Rentals)
+            .where({
+                car_licensePlate: licensePlate,
+                startDate: {
+                    '>=': minStartDate,
+                    '<=': rentalData.startDate
+                }
+            })
+        
+        const rentalCount = rentals.length
+        console.log(`[Handler] Rental.Created - ${rentalCount} rentals for car ${licensePlate} in last 12 months`)
+        
+        // If threshold reached (10 or more rentals), schedule maintenance
+        if (rentalCount >= 10) {
+            // Calculate maintenance start date (day after rental ends)
+            const rentalEndDate = new Date(rentalData.endDate)
+
+            // Maintenance should normally start on the day after
+            // the rental ends.
+            const initialMaintenanceDate = new Date(rentalEndDate)
+            initialMaintenanceDate.setDate(initialMaintenanceDate.getDate() + 1)
+
+            // Because the next day may beb buisy we must find the first available day.
+            const maintenanceStartDate = await findNextAvailableMaintenanceDate(
+                Rentals,
+                Maintenance,
+                licensePlate,
+                initialMaintenanceDate
+            )
+            
+            // Format date as YYYY-MM-DD
+            const startDateStr = maintenanceStartDate
+            const endDateStr = maintenanceStartDate     // Same day for 1 day maintenance
+
+            // Create maintenance record
+            const maintenance = {
+                startDate: startDateStr,
+                endDate: endDateStr,
+                description: autoDescription,
+                cost: 0, // No cost for auto-scheduled maintenance
+                car_licensePlate: licensePlate
+            }
+            
+            await INSERT.into(Maintenance).entries(maintenance)
+            
+            // Log for debugging
+            console.log(`[Auto] Scheduled maintenance for car ${licensePlate} from ${startDateStr} to ${endDateStr} due to ${rentalCount} rentals in last 12 months`)
+        }
     })
 
     /**
@@ -305,4 +410,62 @@ async function validateAvailability(
 function calculateTotalPrice(startDate, endDate, dailyPrice) {
     const daysRented = (new Date(endDate) - new Date(startDate)) / (24 * 60 * 60 * 1000) + 1
     return daysRented * dailyPrice
+}
+
+/**
+ * Finds the next available day for a one-day automatic maintenance.
+ *
+ * The candidate date is considered unavailable if it overlaps
+ * with an existing rental or maintenance for the same car.
+ *
+ * @param {object} Rentals - Rentals entity
+ * @param {object} Maintenance - Maintenance entity
+ * @param {string} licensePlate - Car license plate
+ * @param {string|Date} initialDate - Date from which to start searching
+ * @returns {Promise<string>} Available date in YYYY-MM-DD format
+ */
+async function findNextAvailableMaintenanceDate(
+    Rentals,
+    Maintenance,
+    licensePlate,
+    initialDate
+) {
+
+    // Start searching from the provided date
+    let candidate = new Date(initialDate)
+
+    while (true) {
+
+        // Convert candidate date to YYYY-MM-DD format
+        const candidateStr = candidate.toISOString().split('T')[0]
+
+        // Check whether the car is already rented on the candidate date.
+        const rentalConflict = await SELECT.one
+            .from(Rentals)
+            .where({
+                car_licensePlate: licensePlate,
+                startDate: { '<=': candidateStr },
+                endDate: { '>=': candidateStr }
+            })
+
+        // Check whether the car already has maintenance
+        // scheduled for the candidate date.
+        const maintenanceConflict = await SELECT.one
+            .from(Maintenance)
+            .where({
+                car_licensePlate: licensePlate,
+                startDate: { '<=': candidateStr },
+                endDate: { '>=': candidateStr }
+            })
+
+        // If there is no rental and no maintenance on this date,
+        // the date is available.
+        if (!rentalConflict && !maintenanceConflict) {
+            return candidateStr
+        }
+
+        // The candidate date is occupied.
+        // Move to the next day and check again.
+        candidate.setDate(candidate.getDate() + 1)
+    }
 }
