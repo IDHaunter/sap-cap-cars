@@ -49,13 +49,17 @@ module.exports = cds.service.impl(async function () {
         const { startDate, endDate, customer_ID } = req.data
         const { licensePlate } = req.params[0]
 
+        // Users may only rent for themselves, so their customer_ID is derived
+        // from the logged-in user rather than trusted from the request.
+        const resolvedCustomerId = req.user.is('User') ? req.user.id : customer_ID
+
         validatePeriod(req, startDate, endDate)
         await validateAvailability(req, Rentals, Maintenance, licensePlate, startDate, endDate)
 
         const rental = {
             startDate,
             endDate,
-            customer_ID,
+            customer_ID: resolvedCustomerId,
             car_licensePlate: licensePlate
         }
 

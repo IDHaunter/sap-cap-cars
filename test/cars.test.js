@@ -2,6 +2,9 @@ const cds = require('@sap/cds')
 
 const { POST, expect } = cds.test()
 
+// Cars may only be created by Admin, so requests must authenticate as such.
+const asAdmin = { auth: { username: 'admin', password: 'admin' } }
+
 describe('Cars', () => {
 
     it('should create a valid car', async () => {
@@ -13,7 +16,7 @@ describe('Cars', () => {
             year: 2023,
             dailyPrice: 50,
             category_code: 'SEDAN'
-        })
+        }, asAdmin)
 
         expect(response.status).to.equal(201)
     })
@@ -29,7 +32,7 @@ describe('Cars', () => {
                 year: new Date().getFullYear() + 1,
                 dailyPrice: 50,
                 category_code: 'SEDAN'
-            })
+            }, asAdmin)
 
             throw new Error('Request should have been rejected')
 
@@ -50,7 +53,7 @@ describe('Cars', () => {
                 year: new Date().getFullYear() - 16,
                 dailyPrice: 50,
                 category_code: 'SEDAN'
-            })
+            }, asAdmin)
         ).to.be.rejectedWith('Car year must be within the last 15 years')
     })
 
@@ -65,11 +68,11 @@ describe('Cars', () => {
                 year: 2023,
                 dailyPrice: 0,
                 category_code: 'SEDAN'
-            })
+            }, asAdmin)
         ).to.be.rejectedWith('dailyPrice')
     })
 
-    
+
     it('rejects a car with negative daily price', async () => {
 
         await expect(
@@ -80,7 +83,7 @@ describe('Cars', () => {
                 year: 2023,
                 dailyPrice: -10,
                 category_code: 'SEDAN'
-            })
+            }, asAdmin)
         ).to.be.rejectedWith('dailyPrice')
     })
 
@@ -95,7 +98,7 @@ describe('Cars', () => {
                 year: 2023,
                 dailyPrice: 50,
                 category_code: 'DOES-NOT-EXIST'
-            })
+            }, asAdmin)
         ).to.be.rejected
     })
 

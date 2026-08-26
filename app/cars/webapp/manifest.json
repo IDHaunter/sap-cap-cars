@@ -132,9 +132,9 @@
                     "content": {
                         "header": {
                             "actions": {
-                                "Test": {
+                                "Rent": {
                                     "text": "Rent",
-                                    "press": "sap.cap.cars.cars.ext.CustomActions.onTest",
+                                    "press": "sap.cap.cars.cars.ext.CustomActions.onRent",
                                     "visible": true,
                                     "enabled": true,
                                     "requiresSelection": false,

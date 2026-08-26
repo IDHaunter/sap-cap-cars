@@ -651,6 +651,12 @@ annotate service.Maintenance with @(
         }
 ```
 
+42. Add rent action functionality to a new button and add a dialog with `sap.m.DateRangeSelection` component
+
+- correct action from test to Rent in app/cars/webapp/manifest.json
+- add RentDialog.fragment.xml into app/cars/webapp/ext/fragment
+- create CustomActions.js
+- add automaticaly userID to the rent period dialog
 
 ## ADDITIONAL - BTP DEPLOYMENT AND MCP
 
