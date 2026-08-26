@@ -121,15 +121,33 @@
           }
         },
         "CarsObjectPage": {
-          "type": "Component",
-          "id": "CarsObjectPage",
-          "name": "sap.fe.templates.ObjectPage",
-          "options": {
-            "settings": {
-              "editableHeaderContent": false,
-              "contextPath": "/Cars"
+            "type": "Component",
+            "id": "CarsObjectPage",
+            "name": "sap.fe.templates.ObjectPage",
+            "options": {
+                "settings": {
+                    "editableHeaderContent": false,
+                    "contextPath": "/Cars",
+
+                    "content": {
+                        "header": {
+                            "actions": {
+                                "Test": {
+                                    "text": "Rent custom",
+                                    "press": "sap.cap.cars.cars.ext.CustomActions.onTest",
+                                    "visible": true,
+                                    "enabled": true,
+                                    "requiresSelection": false,
+                                    "position": {
+                                        "anchor": "DataFieldForAction::CarsService.rent",
+                                        "placement": "Before"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
             }
-          }
         }
       }
     }

@@ -27,6 +27,7 @@
 - Service Definition & Implementation: The CDS service definition and its custom JavaScript/TypeScript handler must share the exact same base name and reside in the same folder.
 Example: service.cds and service.js (or service.ts)
 - Common commands: `cds watch` (run dev server), `cds deploy --to sqlite` (rebuild local DB).
+- Do not make commits ("git add" and "git commit" and "git push" are prohibited).  
 
 ## Custom Action Handler Style
 

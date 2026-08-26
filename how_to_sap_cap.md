@@ -599,6 +599,8 @@ annotate service.Maintenance with @(
     ],
 ```
 
+41. Add custom button to the object page
+
 ## ADDITIONAL - BTP DEPLOYMENT AND MCP
 
 ### Install HANA CLI
