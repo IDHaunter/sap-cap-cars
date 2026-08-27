@@ -10,14 +10,12 @@
   },
   "cds": {
     "requires": {
-
       "db": {
         "kind": "sqlite",
         "credentials": {
           "url": "db.sqlite"
         }
       },
-
       "auth": {
         "kind": "mocked",
         "users": {
@@ -27,21 +25,18 @@
               "User"
             ]
           },
-
           "CUST000002": {
             "password": "password",
             "roles": [
               "User"
             ]
           },
-
           "CUST000003": {
             "password": "password",
             "roles": [
               "User"
             ]
           },
-
           "admin": {
             "password": "admin",
             "roles": [
@@ -49,8 +44,11 @@
             ]
           }
         }
+      },
+      "S4VehicleCatalog": {
+        "kind": "odata",
+        "model": "srv/external/S4VehicleCatalog"
       }
-      
     },
     "[test]": {
       "requires": {
@@ -65,7 +63,10 @@
   },
   "dependencies": {
     "@cap-js/mcp": "^1.4.3",
-    "@sap/cds": "^10.0.6"
+    "@sap/cds": "^10.0.6",
+    "@sap-cloud-sdk/connectivity": "^4",
+    "@sap-cloud-sdk/http-client": "^4",
+    "@sap-cloud-sdk/resilience": "^4"
   },
   "workspaces": [
     "app/*"

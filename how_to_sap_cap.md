@@ -663,6 +663,51 @@ annotate service.Maintenance with @(
 - add ivent imiter and ivent handler in the car-service.js
 - add side effect for maintenance after rent event in the car-service.cds
 
+44. Create EDMX file mocked service
+
+- Create a new temporary DB schema db/schema-vehicle-catalog.cds
+
+```
+    namespace sap.cap.cars.catalog;
+
+    entity VehicleBrands {
+        key code : String(20);
+        name     : String(50);
+
+        models   : Composition of many VehicleModels on models.brand = $self;
+    }
+
+    entity VehicleModels {
+        key code : String(20);
+        name     : String(50);
+
+        brand    : Association to VehicleBrands;
+    }
+```
+
+- Create a temporary service vehicle-catalog-service.cds
+
+```
+    using { sap.cap.cars.catalog as db } from '../db/schema-vehicle-catalog';
+
+    @path: '/vehicle-catalog'
+    service VehicleCatalogService {
+
+        entity VehicleBrands as projection on db.VehicleBrands;
+
+        entity VehicleModels as projection on db.VehicleModels;
+
+    }
+```
+
+- Open http://localhost:4004/vehicle-catalog/$metadata and save enries as file "S4VehicleCatalog.edmx"
+
+- run command to use this file as mock service
+
+```
+    cds import external/S4VehicleCatalog.edmx
+```
+
 ## ADDITIONAL - BTP DEPLOYMENT AND MCP
 
 ### Install HANA CLI

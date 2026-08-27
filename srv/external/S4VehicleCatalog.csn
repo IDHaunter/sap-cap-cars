@@ -1,0 +1,92 @@
+{
+ "meta": {
+  "creator": "cds-dk 10.0.6"
+ },
+ "$version": "2.0",
+ "definitions": {
+  "S4VehicleCatalog.VehicleBrands": {
+   "kind": "entity",
+   "@cds.external": true,
+   "@cds.persistence.skip": true,
+   "elements": {
+    "code": {
+     "key": true,
+     "type": "cds.String",
+     "length": 20,
+     "notNull": true
+    },
+    "name": {
+     "type": "cds.String",
+     "length": 50
+    },
+    "models": {
+     "type": "cds.Composition",
+     "target": "S4VehicleCatalog.VehicleModels",
+     "cardinality": {
+      "max": "*"
+     },
+     "on": [
+      {
+       "ref": [
+        "models",
+        "brand"
+       ]
+      },
+      "=",
+      {
+       "ref": [
+        "$self"
+       ]
+      }
+     ]
+    }
+   }
+  },
+  "S4VehicleCatalog.VehicleModels": {
+   "kind": "entity",
+   "@cds.external": true,
+   "@cds.persistence.skip": true,
+   "elements": {
+    "code": {
+     "key": true,
+     "type": "cds.String",
+     "length": 20,
+     "notNull": true
+    },
+    "name": {
+     "type": "cds.String",
+     "length": 50
+    },
+    "brand_code": {
+     "type": "cds.String",
+     "length": 20
+    },
+    "brand": {
+     "type": "cds.Association",
+     "target": "S4VehicleCatalog.VehicleBrands",
+     "cardinality": {
+      "max": 1
+     },
+     "on": [
+      {
+       "ref": [
+        "brand",
+        "code"
+       ]
+      },
+      "=",
+      {
+       "ref": [
+        "brand_code"
+       ]
+      }
+     ]
+    }
+   }
+  },
+  "S4VehicleCatalog": {
+   "kind": "service",
+   "@cds.external": true
+  }
+ }
+}
