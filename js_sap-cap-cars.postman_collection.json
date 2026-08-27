@@ -71,6 +71,46 @@
           "response": []
         },
         {
+          "name": "cars/CarBrands",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/odata/v4/cars/CarBrands",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "odata",
+                "v4",
+                "cars",
+                "CarBrands"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "cars/CarModels",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/odata/v4/cars/CarModels",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "odata",
+                "v4",
+                "cars",
+                "CarModels"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
           "name": "cars/Rentals",
           "request": {
             "method": "GET",
@@ -125,6 +165,26 @@
                 "v4",
                 "cars",
                 "Customers"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "cars/Configuration",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/odata/v4/cars/Configuration",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "odata",
+                "v4",
+                "cars",
+                "Configuration"
               ]
             }
           },
@@ -204,7 +264,7 @@
               }
             },
             "url": {
-              "raw": "{{baseUrl}}/odata/v4/cars/Cars(licensePlate='AB4444CD')/setToMaintenance",
+              "raw": "{{baseUrl}}/odata/v4/cars/Cars(licensePlate='AB1234CD')/setToMaintenance",
               "host": [
                 "{{baseUrl}}"
               ],
@@ -212,8 +272,26 @@
                 "odata",
                 "v4",
                 "cars",
-                "Cars(licensePlate='AB4444CD')",
+                "Cars(licensePlate='AB1234CD')",
                 "setToMaintenance"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "vehicle-catalog/$metadata",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/vehicle-catalog/$metadata",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "vehicle-catalog",
+                "$metadata"
               ]
             }
           },
@@ -222,6 +300,21 @@
       ]
     }
   ],
+  "auth": {
+    "type": "basic",
+    "basic": [
+      {
+        "key": "username",
+        "value": "admin",
+        "type": "string"
+      },
+      {
+        "key": "password",
+        "value": "admin",
+        "type": "string"
+      }
+    ]
+  },
   "event": [
     {
       "listen": "prerequest",

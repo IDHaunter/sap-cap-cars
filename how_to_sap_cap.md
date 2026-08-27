@@ -724,7 +724,96 @@ service CarsService {
 }
 ```
 
-- test "cds watch" and check new entites
+46. Create in db/data two files with data for entities CarBrands and CarModels
+
+- Add a virtual brandName field to CarModels for cross-filtering support
+
+```
+  entity CarModels as projection on S4VehicleCatalog.VehicleModels {
+    *,
+    virtual brandName: String
+  };
+```
+
+- Add Common.ValueList annotations to Cars.brand and Cars.model fields
+
+```
+    annotate CarsService.Cars with {
+    brand @(Common.ValueList: {
+        $Type: 'Common.ValueListType',
+        CollectionPath: 'CarBrands',
+        Parameters: [
+        {
+            $Type: 'Common.ValueListParameterInOut',
+            LocalDataProperty: brand,
+            ValueListProperty: 'name'
+        },
+        {
+            $Type: 'Common.ValueListParameterDisplayOnly',
+            ValueListProperty: 'code'
+        }
+        ]
+    });
+
+    model @(Common.ValueList: {
+        $Type: 'Common.ValueListType',
+        CollectionPath: 'CarModels',
+        Parameters: [
+        {
+            $Type: 'Common.ValueListParameterInOut',
+            LocalDataProperty: model,
+            ValueListProperty: 'name'
+        },
+        {
+            $Type: 'Common.ValueListParameterInOut',
+            LocalDataProperty: brand,
+            ValueListProperty: 'brandName'
+        },
+        {
+            $Type: 'Common.ValueListParameterDisplayOnly',
+            ValueListProperty: 'code'
+        }
+        ]
+    });
+    };
+```
+
+- Created custom READ handlers for CarBrands and CarModels (CarModels handler enriches each model with its brandName by looking up the brand)
+
+```
+    const vehicleBrandsMock = [
+        { code: 'TOYOTA', name: 'Toyota' },
+        { code: 'HONDA', name: 'Honda' },
+        { code: 'FORD', name: 'Ford' },
+        { code: 'VOLKSWAGEN', name: 'Volkswagen' }
+    ]
+
+    const vehicleModelsMock = [
+        { code: 'COROLLA', name: 'Corolla', brand_code: 'TOYOTA' },
+        { code: 'CAMRY', name: 'Camry', brand_code: 'TOYOTA' },
+        { code: 'CR-V', name: 'CR-V', brand_code: 'HONDA' },
+        { code: 'F-150', name: 'F-150', brand_code: 'FORD' },
+        { code: 'EXPLORER', name: 'Explorer', brand_code: 'FORD' },
+        { code: 'GOLF', name: 'Golf', brand_code: 'VOLKSWAGEN' }
+    ]
+
+    this.on('READ', 'CarBrands', async (req) => {
+        if (req.query.SELECT) {
+            return vehicleBrandsMock
+        }
+    })
+
+    this.on('READ', 'CarModels', async (req) => {
+        const models = vehicleModelsMock.map(m => ({
+            ...m,
+            brandName: vehicleBrandsMock.find(b => b.code === m.brand_code)?.name
+        }))
+
+        if (req.query.SELECT) {
+            return models
+        }
+    })
+```
 
 ## ADDITIONAL - BTP DEPLOYMENT AND MCP
 

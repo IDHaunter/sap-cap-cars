@@ -2,7 +2,7 @@ const cds = require('@sap/cds')
 
 module.exports = cds.service.impl(async function () {
 
-    const { Cars, Rentals, Maintenance } = this.entities
+    const { Cars, Rentals, Maintenance, CarBrands, CarModels } = this.entities
 
     // ----- Singltone for user authentication ------
 
@@ -17,6 +17,41 @@ module.exports = cds.service.impl(async function () {
             ID: 'config',
             userId: req.user.id,
             isAdmin: isAdmin
+        }
+    })
+
+    // ------------------- CarModels & CarBrands --------
+
+    const vehicleBrandsMock = [
+        { code: 'TOYOTA', name: 'Toyota' },
+        { code: 'HONDA', name: 'Honda' },
+        { code: 'FORD', name: 'Ford' },
+        { code: 'VOLKSWAGEN', name: 'Volkswagen' }
+    ]
+
+    const vehicleModelsMock = [
+        { code: 'COROLLA', name: 'Corolla', brand_code: 'TOYOTA' },
+        { code: 'CAMRY', name: 'Camry', brand_code: 'TOYOTA' },
+        { code: 'CR-V', name: 'CR-V', brand_code: 'HONDA' },
+        { code: 'F-150', name: 'F-150', brand_code: 'FORD' },
+        { code: 'EXPLORER', name: 'Explorer', brand_code: 'FORD' },
+        { code: 'GOLF', name: 'Golf', brand_code: 'VOLKSWAGEN' }
+    ]
+
+    this.on('READ', 'CarBrands', async (req) => {
+        if (req.query.SELECT) {
+            return vehicleBrandsMock
+        }
+    })
+
+    this.on('READ', 'CarModels', async (req) => {
+        const models = vehicleModelsMock.map(m => ({
+            ...m,
+            brandName: vehicleBrandsMock.find(b => b.code === m.brand_code)?.name
+        }))
+
+        if (req.query.SELECT) {
+            return models
         }
     })
 

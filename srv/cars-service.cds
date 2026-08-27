@@ -1,5 +1,4 @@
 using { sap.cap.cars as db } from '../db/schema';
-
 using { S4VehicleCatalog } from './external/S4VehicleCatalog';
 
 @odata @mcp
@@ -7,7 +6,11 @@ using { S4VehicleCatalog } from './external/S4VehicleCatalog';
 service CarsService {
 
   entity CarBrands as projection on S4VehicleCatalog.VehicleBrands;
-  entity CarModels as projection on S4VehicleCatalog.VehicleModels;
+
+  entity CarModels as projection on S4VehicleCatalog.VehicleModels {
+    *,
+    virtual brandName: String
+  };
 
   @odata.draft.enabled
   @restrict: [
@@ -140,3 +143,42 @@ service CarsService {
   }
 
 }
+
+annotate CarsService.Cars with {
+  brand @(Common.ValueList: {
+    $Type: 'Common.ValueListType',
+    CollectionPath: 'CarBrands',
+    Parameters: [
+      {
+        $Type: 'Common.ValueListParameterInOut',
+        LocalDataProperty: brand,
+        ValueListProperty: 'name'
+      },
+      {
+        $Type: 'Common.ValueListParameterDisplayOnly',
+        ValueListProperty: 'code'
+      }
+    ]
+  });
+
+  model @(Common.ValueList: {
+    $Type: 'Common.ValueListType',
+    CollectionPath: 'CarModels',
+    Parameters: [
+      {
+        $Type: 'Common.ValueListParameterInOut',
+        LocalDataProperty: model,
+        ValueListProperty: 'name'
+      },
+      {
+        $Type: 'Common.ValueListParameterInOut',
+        LocalDataProperty: brand,
+        ValueListProperty: 'brandName'
+      },
+      {
+        $Type: 'Common.ValueListParameterDisplayOnly',
+        ValueListProperty: 'code'
+      }
+    ]
+  });
+};
