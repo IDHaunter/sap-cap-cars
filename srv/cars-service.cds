@@ -1,8 +1,13 @@
 using { sap.cap.cars as db } from '../db/schema';
 
+using { S4VehicleCatalog } from './external/S4VehicleCatalog';
+
 @odata @mcp
 @requires: 'authenticated-user'
 service CarsService {
+
+  entity CarBrands as projection on S4VehicleCatalog.VehicleBrands;
+  entity CarModels as projection on S4VehicleCatalog.VehicleModels;
 
   @odata.draft.enabled
   @restrict: [

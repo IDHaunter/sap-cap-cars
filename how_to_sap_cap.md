@@ -700,7 +700,7 @@ annotate service.Maintenance with @(
     }
 ```
 
-- Open http://localhost:4004/vehicle-catalog/$metadata and save enries as file "S4VehicleCatalog.edmx"
+- Open http://localhost:4004/vehicle-catalog/$metadata and save entries as file "S4VehicleCatalog.edmx"
 
 - run command to use this file as mock service
 
@@ -708,7 +708,30 @@ annotate service.Maintenance with @(
     cds import external/S4VehicleCatalog.edmx
 ```
 
+45. Import S4VehicleCatalog into CarsService:
+
+- Add into srv/car-service.cds:
+
+```
+    using { S4VehicleCatalog } from './external/S4VehicleCatalog';
+```
+
+```
+service CarsService {
+    entity CarBrands as projection on S4VehicleCatalog.VehicleBrands;
+    entity CarModels as projection on S4VehicleCatalog.VehicleModels;
+    ...
+}
+```
+
+- test "cds watch" and check new entites
+
 ## ADDITIONAL - BTP DEPLOYMENT AND MCP
+
+## CDS Graphical Modeler / OData CSDL Modeler
+
+- install to VSCode and use it to view CDS model files (Open with... -> CDS Graphical Modeler)
+- install OData CSDL Modeler to view .edmx files
 
 ### Install HANA CLI
 
