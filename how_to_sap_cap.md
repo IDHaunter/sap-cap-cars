@@ -822,6 +822,37 @@ service CarsService {
 - install to VSCode and use it to view CDS model files (Open with... -> CDS Graphical Modeler)
 - install OData CSDL Modeler to view .edmx files
 
+## DEBUG USING CROME DEBUGGER
+
+- cds watch --debug    -> you will see in console Debugger listening on ws://127.0.0.1:9229/0f7d7fcf-badf-448f-996a-42313c4bb4ea 
+- chrome://inspect     -> open this link in the google chrome browser and press inspect and "DevTools" will open
+- set break points and test code initialize it from fiori application
+
+## DEBUG IN VSCODE
+
+- cds watch --debug
+- go into "Run And Debug" menu
+- add configuration like this:
+
+```
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "node",
+            "request": "attach",
+            "name": "Attach to CAP",
+            "address": "localhost",
+            "port": 9229
+        }
+    ]
+}
+```
+
+- Press "Attach to CAP" and it will connect to the node debugger
+
+- for js scripts: node --inspect-brk run.js / node --inspect run.js
+
 ### Install HANA CLI
 
 - npm install -g hana-cli
